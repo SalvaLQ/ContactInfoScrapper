@@ -1,0 +1,136 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:wpf="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+		xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+        xmlns:controls="clr-namespace:Material.Styles.Controls;assembly=Material.Styles"
+		xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+		xmlns:i="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
+		xmlns:p="clr-namespace:AllContactInfoScrapper.LocalizationResources;assembly=AllContactInfoScrapper"
+        mc:Ignorable="d"  d:DesignWidth="1000" d:DesignHeight="700" Width="1000" Height="700"
+        x:Class="AllContactInfoScrapper.Views.MainWnd"   Classes="MainWindow" WindowStartupLocation="CenterScreen" Title="{x:Static p:MainRes.WindowTitle}" 
+		Icon="avares://AllContactInfoScrapper/Assets/Icons/AllContactInfoScrapperAboutIcon.ico" >
+	<DockPanel>
+		<controls:ColorZone  VerticalAlignment="Top" HorizontalAlignment="Stretch" DockPanel.Dock="Top" Height="40" Mode="PrimaryMid" ZIndex="1">
+			<Grid ColumnDefinitions="Auto,*">
+				<TextBlock Margin="10,0,0,0"  Grid.Column="0" Text="{x:Static p:MainRes.WindowTitle}" Classes="Headline6" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+				<Menu Grid.Column="1"  Height="32" Padding="0" Margin="0,0,10,0" HorizontalAlignment="Right">
+					<MenuItem Height="32" Width="32">						
+						<MenuItem  Header="{x:Static p:MainRes.mnSettings}" Click="mnSettings_Click" Padding="0"  >
+							<MenuItem.Icon>
+								<avalonia:MaterialIcon Kind="Settings" Width="24" Height="24" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="{x:Static p:MainRes.mnAbout}" Click="mnAbout_Click"   >
+							<MenuItem.Icon>
+								<avalonia:MaterialIcon Kind="Information" Foreground="Blue"  Width="24" Height="24" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<Separator></Separator>
+						<MenuItem Header="{x:Static p:MainRes.mnExit}" Click="mnExit_Click"   >
+							<MenuItem.Icon>
+								<avalonia:MaterialIcon Kind="ExitToApp"  Width="24" Height="24" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+				</Menu>
+			</Grid>
+		</controls:ColorZone>
+		<Grid RowDefinitions="Auto,Auto,*,Auto,Auto" Margin="10" >
+			<Grid Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" RowDefinitions="Auto" ColumnDefinitions="Auto,Auto,Auto">
+				<StackPanel Grid.Row="0" Grid.Column="0" Spacing="-10" Width="650" >
+					<TextBox  UseFloatingWatermark="True" Classes="Filled Dense" Text="{Binding Keywords}" wpf:TextFieldAssist.Label="{x:Static p:MainRes.LabelKeys}"  />
+					<TextBox   UseFloatingWatermark="True" Classes="Filled Dense" wpf:TextFieldAssist.Label="{x:Static p:MainRes.LabelEmails}" Text="{Binding Emails}"></TextBox>
+					<StackPanel  Margin="0,5,0,0"  Orientation="Horizontal" Spacing="10">
+						<RadioButton GroupName="KeyMode" IsChecked="{Binding AllWord}" Content="{x:Static p:MainRes.ContainsAll}"></RadioButton>
+						<RadioButton GroupName="KeyMode" IsChecked="{Binding AnyWord}" Content="{x:Static p:MainRes.ContainsAny}"></RadioButton>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel Margin="5,0,0,0"  Grid.Row="0" Grid.Column="1" Spacing="10" >
+					<ComboBox VerticalAlignment="Top"  Classes="Outline"
+							  wpf:ComboBoxAssist.Label="Social network"  Width="200" ItemsSource="{Binding ContactInfoProviders}"
+							  SelectedItem="{Binding SelectedConcatInfoProvider}"  >
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock  Text="{Binding Name}"  />
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</StackPanel>
+				<StackPanel Margin="5,0,0,0" Grid.Row="0"  Grid.Column="2" Orientation="Vertical" Spacing="10"  >
+					<Button    Click="btLaunch_Click" IsEnabled="{Binding LaunchEnabled}"     >
+						<StackPanel >
+							<Image Width="20" Height="20" Source="avares://AllContactInfoScrapper/Assets/Icons/play-svgrepo-com.png"></Image>
+							<TextBlock   Text="{x:Static p:MainRes.Launch}"/>
+						</StackPanel>
+					</Button>
+					<Button   Click="btStop_Click" IsEnabled="{Binding StopEnabled}"   >
+						<StackPanel>
+							<Image Width="20" Height="20" Source="avares://AllContactInfoScrapper/Assets/Icons/stop-svgrepo-com.png"></Image>
+							<TextBlock  Text="{x:Static p:MainRes.Stop}"/>
+						</StackPanel>
+					</Button>
+				</StackPanel>
+			</Grid>
+			<ProgressBar Grid.Row="1" Margin="0,10,0,0" Height="8" IsIndeterminate="{Binding StopEnabled}"   IsEnabled="{Binding StopEnabled}" IsVisible="{Binding StopEnabled}" />
+			<DataGrid Margin="0,10,0,0"  GridLinesVisibility="All"  HorizontalAlignment="Stretch"     BorderThickness="2" CanUserResizeColumns="True" CanUserSortColumns="True"
+						Grid.Row="2" ItemsSource="{Binding ContactsInfo}"  AutoGenerateColumns="False" IsReadOnly="True"  >
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="{x:Static p:MainRes.HeadTitle}"  Binding="{Binding Title}" Width="100"/>
+					<DataGridTextColumn Header="{x:Static p:MainRes.HeadEmail}"  Binding="{Binding Email}" Width="80"/>
+					<DataGridTextColumn Header="{x:Static p:MainRes.HeadPhone}"  Binding="{Binding Phone}" Width="70"/>
+					<DataGridTextColumn Header="{x:Static p:MainRes.HeadDesc}"  Binding="{Binding Description}"  Width="*"/>
+					<DataGridTextColumn Header="{x:Static p:MainRes.HeadUrl}"  Binding="{Binding Url}" Width="*"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<controls:Card  Grid.Row="3"  Margin="0,10,0,0" Background="{DynamicResource PrimaryHueLightBrush}"  >
+			<StackPanel Orientation="Horizontal" Spacing="5">					
+				<controls:Card  >
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20" Source="avares://AllContactInfoScrapper/Assets/Icons/contact-book-svgrepo-com.png"></Image>
+						<TextBlock Classes="ButtonText"   Text="{x:Static p:MainRes.TotalContacts}"/>
+						<TextBlock Classes="ButtonText"  Text="{Binding TotalContacts}"/>
+					</StackPanel>
+				</controls:Card>
+				<controls:Card>
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20" Source="avares://AllContactInfoScrapper/Assets/Icons/call-svgrepo-com.png"></Image>
+						<TextBlock Classes="ButtonText"   Text="{x:Static p:MainRes.TotalPhones}"/>
+						<TextBlock Classes="ButtonText"  Text="{Binding TotalPhones}"/>
+					</StackPanel>
+				</controls:Card>
+				<controls:Card>
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20" Source="avares://AllContactInfoScrapper/Assets/Icons/file-email-svgrepo-com.png"></Image>
+						<TextBlock Classes="ButtonText"   Text="{x:Static p:MainRes.TotalEmails}"/>
+						<TextBlock Classes="ButtonText"  Text="{Binding TotalEmails}"/>
+					</StackPanel>
+				</controls:Card>
+					 
+			</StackPanel>
+			</controls:Card>
+			<StackPanel Grid.Row="4" Margin="0,10,0,0"  Spacing="5"    Orientation="Horizontal" >
+				<Button Classes="Outline Dark" Click="btExport_Click" >
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20"    Source="avares://AllContactInfoScrapper/Assets/Icons/download-svgrepo-com.png"></Image>
+						<TextBlock  Classes="ButtonText" Padding="0,4,0,0" Text="{x:Static p:MainRes.ExportCsv}"/>
+					</StackPanel>
+				</Button>
+				<Button Classes="Outline Dark" Click="btExportExcel_Click" >
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20"    Source="avares://AllContactInfoScrapper/Assets/Icons/file-excel-svgrepo-com.png"></Image>
+						<TextBlock  Classes="ButtonText" Padding="0,4,0,0" Text="{x:Static p:MainRes.ExportExcel}"/>
+					</StackPanel>
+				</Button>
+				<Button Classes="Outline Dark" Click="btClear_Click" >
+					<StackPanel Orientation="Horizontal" Spacing="5">
+						<Image Width="20" Height="20"    Source="avares://AllContactInfoScrapper/Assets/Icons/retweet-svgrepo-com.png"></Image>
+						<TextBlock  Classes="ButtonText" Padding="0,4,0,0" Text="{x:Static p:MainRes.Clear}"/>
+					</StackPanel>
+				</Button>
+
+			</StackPanel>
+		</Grid>
+	</DockPanel>
+</Window>

@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AllContactInfoScrapper" GeneratedClassName="appsettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MinDelay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="MaxDelay" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="MaxPages" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="ResultPerPage" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="SearchEngineDefaultCountry" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.google.com</Value>
+    </Setting>
+    <Setting Name="SearchEngineDefaultLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">any</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,18 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			        xmlns:themes="clr-namespace:Material.Styles.Themes;assembly=Material.Styles"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             x:Class="AllContactInfoScrapper.App">
+    <Application.Styles>
+      <themes:CustomMaterialTheme>
+        <themes:CustomMaterialTheme.Palettes>
+          
+          <themes:CustomMaterialThemeResources x:Key="Light"
+                                      PrimaryColor="#2962ff"
+                                      SecondaryColor="#78909c" />
+        </themes:CustomMaterialTheme.Palettes>
+      </themes:CustomMaterialTheme>
+      <materialIcons:MaterialIconStyles />
+      <StyleInclude Source="/Styles/Window.axaml" />
+	</Application.Styles>
+</Application>

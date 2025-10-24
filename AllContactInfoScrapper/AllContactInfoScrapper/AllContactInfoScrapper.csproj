@@ -1,0 +1,125 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+   
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <!--Avalonia doesen't support TrimMode=link currently,but we are working on that https://github.com/AvaloniaUI/Avalonia/issues/6892 -->
+    <TrimMode>copyused</TrimMode>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationIcon>Assets\Icons\AllContactInfoScrapperAboutIcon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove="Assets\AllContactInfoScrapperAboutIcon.ico" />
+    <None Remove="Assets\AllContactInfoScrapperAboutIcon.png" />
+    <None Remove="Assets\ContactInfoProviders.csv" />
+    <None Remove="Assets\GoogleCountries.csv" />
+    <None Remove="Assets\GoogleLanguages.csv" />
+    <None Remove="Assets\Icons\call-svgrepo-com.png" />
+    <None Remove="Assets\Icons\contact-book-svgrepo-com.png" />
+    <None Remove="Assets\Icons\download-svgrepo-com.png" />
+    <None Remove="Assets\Icons\file-email-svgrepo-com.png" />
+    <None Remove="Assets\Icons\file-excel-svgrepo-com.png" />
+    <None Remove="Assets\Icons\play-svgrepo-com.png" />
+    <None Remove="Assets\Icons\retweet-svgrepo-com.png" />
+    <None Remove="Assets\Icons\stop-svgrepo-com.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Icons\AllContactInfoScrapperAboutIcon.ico" />
+    <AvaloniaResource Include="Assets\Icons\AllContactInfoScrapperAboutIcon.png" />
+    <AvaloniaResource Include="Assets\ContactInfoProviders.csv" />
+    <AvaloniaResource Include="Assets\GoogleCountries.csv" />
+    <AvaloniaResource Include="Assets\GoogleLanguages.csv" />
+    <AvaloniaResource Include="Assets\Icons\call-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\contact-book-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\download-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\file-email-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\file-excel-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\play-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\retweet-svgrepo-com.png" />
+    <AvaloniaResource Include="Assets\Icons\stop-svgrepo-com.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Icons\AllContactInfoScrapperAboutIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--This helps with theme dll-s trimming.
+    If you will publish your application in self-contained mode with p:PublishTrimmed=true and it will use Fluent theme Default theme will be trimmed from the output and vice versa.
+    https://github.com/AvaloniaUI/Avalonia/issues/5593 -->
+    <TrimmableAssembly Include="Avalonia.Themes.Fluent" />
+    <TrimmableAssembly Include="Avalonia.Themes.Default" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.2" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.3.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.2" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.2" />
+    <PackageReference Include="Material.Avalonia" Version="3.12.0" />
+    <PackageReference Include="Material.Avalonia.DataGrid" Version="3.12.0" />
+    <PackageReference Include="Material.Avalonia.Dialogs" Version="3.12.0" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.4.1" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.6" />
+    <PackageReference Include="Yove.Proxy" Version="1.1.1" />
+   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AllContactInfoScrapper.Infraestructure\AllContactInfoScrapper.Infraestructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="appsettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>appsettings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="LocalizationResources\AboutRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AboutRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="LocalizationResources\CommonRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="LocalizationResources\MainRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MainRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="LocalizationResources\SettingsRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SettingsRes.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="LocalizationResources\AboutRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AboutRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LocalizationResources\CommonRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LocalizationResources\MainRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LocalizationResources\SettingsRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SettingsRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="appsettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>appsettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+</Project>

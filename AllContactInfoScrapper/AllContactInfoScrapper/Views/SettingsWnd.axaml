@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+		xmlns:wpf="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+		xmlns:p="clr-namespace:AllContactInfoScrapper.LocalizationResources;assembly=AllContactInfoScrapper"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600" Width="400"  Height="600"
+        x:Class="AllContactInfoScrapper.Views.SettingsWnd"
+        Title="{x:Static p:SettingsRes.WindowTitle}" WindowStartupLocation="CenterOwner">
+	<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" Margin="10" >
+		<StackPanel  Grid.Row="0" Margin="0,10,0,0"  >
+			<TextBlock Classes="Headline6" HorizontalAlignment="Left" Text="{x:Static p:SettingsRes.SearchOptions}"/>
+			<ComboBox Classes="Outline" wpf:ComboBoxAssist.Label="{x:Static p:SettingsRes.LangLabel}" ItemsSource="{Binding Languages}" SelectedItem="{Binding SelectedLanguage}" >
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"    />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<ComboBox Classes="Outline" wpf:ComboBoxAssist.Label="{x:Static p:SettingsRes.CountryLabel}" ItemsSource="{Binding Countries}" SelectedItem="{Binding SelectedCountry}" >
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Name}"    />
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<TextBox  UseFloatingWatermark="True"    Classes="Outline" wpf:TextFieldAssist.Label="{x:Static p:SettingsRes.NumPages}" Text="{Binding MaxPages}"  ></TextBox>
+			<TextBox  UseFloatingWatermark="True"  Classes="Outline" wpf:TextFieldAssist.Label="{x:Static p:SettingsRes.ResPage}" Text="{Binding ResultPerPage}"  ></TextBox>
+		</StackPanel>
+		<StackPanel  Grid.Row="3" Margin="0,10,0,0">
+			<TextBlock Classes="Headline6" HorizontalAlignment="Left" Text="{x:Static p:SettingsRes.delayTitle}"/>
+			<TextBox HorizontalAlignment="Stretch" UseFloatingWatermark="True" Classes="Outline" wpf:TextFieldAssist.Label="{x:Static p:SettingsRes.delayMin}" Text="{Binding delayMin}"  ></TextBox>
+			<TextBox HorizontalAlignment="Stretch"  UseFloatingWatermark="True" Classes="Outline" wpf:TextFieldAssist.Label="{x:Static p:SettingsRes.delayMax}"    Text="{Binding delayMax}"    ></TextBox>
+		</StackPanel>
+		
+		<StackPanel Margin="0,10,0,0" Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+			<Button Click="btAcept_Click"   Content="{x:Static p:CommonRes.acept}"/>
+			<Button Margin="5,0,0,0" Click="btCancel_Click"   Content="{x:Static p:CommonRes.cancel}"/>
+		</StackPanel>
+	</Grid>
+</Window>
